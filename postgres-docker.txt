@@ -1,0 +1,16 @@
+mkdir /home/niels/postgres
+docker run --name pgdocker -e POSTGRES_PASSWORD=password -d -p 5432:5432 -v /home/niels/postgres:/var/lib/postgresql/data postgres
+docker stop pgdocker
+docker start pgdocker 
+docker rm pgdocker
+
+export PGPASSWORD="password"
+psql -h localhost -U postgres -d postgres
+
+
+docker pull dpage/pgadmin4
+docker run -p 80:80 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=niels@jespersen.info" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
+
+
+Lidt mærkeligt, så skal pgadmin4 nås på den fysiske hosts ip, fx http://192.168.0.11
+Det samme skal servere fra pgAdmin grænsefladen. 
