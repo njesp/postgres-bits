@@ -1,0 +1,51 @@
+=== AD Auth ===
+
+https://www.postgresql.org/docs/11/gssapi-auth.html
+
+=== Standard brugeropsætning ===
+
+CREATE DATABASE testdb2 WITH OWNER = postgres ENCODING = 'UTF8' LC_COLLATE = 'Danish_Denmark.1252' LC_CTYPE = 'Danish_Denmark.1252' TABLESPACE = pg_default CONNECTION LIMIT = -1;
+
+-- Postgres 11 
+-- Revoke create on the public schema
+REVOKE CREATE ON SCHEMA public FROM public;
+
+-- Create two users, a creater user and a reader user
+
+create role user_c login password 'niels' inherit;
+create role user_r login password 'niels' inherit;
+
+-- Create schema and corresponding roles and grant to relevant users
+
+CREATE ROLE P123456_C noinherit;
+CREATE ROLE P123456_R noinherit; 
+CREATE SCHEMA P123456 AUTHORIZATION P123456_C;
+GRANT ALL ON SCHEMA P123456 TO P123456_C;
+GRANT USAGE ON SCHEMA P123456 TO P123456_R;
+GRANT P123456_C to user_c;
+GRANT P123456_R to user_r;
+
+--ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO P123456_R;
+-- Does not work. 
+-- Mon ikke dette virker. Skulle så scriptes periodisk.
+--ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO niels_R;
+
+
+-- Dette kan nok gå, mere traditionelt. 
+
+REVOKE CREATE ON SCHEMA public FROM public;
+create role niels login password 'niels' inherit;
+CREATE ROLE P123456 login noinherit password 'niels';
+CREATE SCHEMA P123456 AUTHORIZATION P123456;
+-- Log på som p123456 og opret objekter og giv rettigheder til roller 
+
+
+
+grant select on p123456.a to p123456_r;
+-- This does. 
+
+
+-- Then user_c connects and does this; create table p123456.a (b int); 
+-- Finally user_r connects and does this; select b from p123456.a; 
+-- and gets permission denied for table a
+
