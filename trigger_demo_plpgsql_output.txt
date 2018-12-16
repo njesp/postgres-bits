@@ -1,0 +1,132 @@
+---------  Sun, 16 Dec 2018 16:32:27 GMT  ---------
+drop table if exists master cascade;
+DROP TABLE
+drop table if exists master_hist cascade;
+DROP TABLE
+create table master (
+    unit_id numeric(5 , 0) primary key not null
+    , unit_detail varchar(30)
+    , change_date timestamp not null default current_timestamp
+);
+CREATE TABLE
+create table master_hist (
+    unit_id numeric(5 , 0) not null
+    , unit_detail varchar(30)
+    , archive_date timestamp default current_timestamp not null
+);
+CREATE TABLE
+create or replace function master_upd_fn ()
+    returns trigger
+as $$
+begin
+    if new.unit_detail != old.unit_detail then
+        insert into master_hist (unit_id , unit_detail , archive_date)
+        values (old.unit_id , old.unit_detail , current_timestamp);
+    end if;
+    return new;
+end;
+$$
+language plpgsql;
+CREATE FUNCTION
+create trigger master_upd_trg before
+update
+    on master for each row execute procedure master_upd_fn ();
+CREATE TRIGGER
+insert into master (unit_id , unit_detail)
+    values (1 , 'Original udgave') , (2 , 'Original nummer 2');
+INSERT 0 2
+update
+    master
+set
+    unit_detail = 'Nyt indhold'
+    , change_date = current_timestamp
+where
+    unit_id = 1;
+UPDATE 1
+update
+    master
+set
+    unit_detail = 'Endnu nyere indhold'
+    , change_date = current_timestamp
+where
+    unit_id = 1;
+UPDATE 1
+psql end.
+
+---------  Sun, 16 Dec 2018 16:35:26 GMT  ---------
+drop table if exists master cascade;
+DROP TABLE
+drop table if exists master_hist cascade;
+DROP TABLE
+create table master (
+    unit_id numeric(5 , 0) primary key not null
+    , unit_detail varchar(30)
+    , change_date timestamp not null default current_timestamp
+);
+CREATE TABLE
+create table master_hist (
+    unit_id numeric(5 , 0) not null
+    , unit_detail varchar(30)
+    , archive_date timestamp default current_timestamp not null
+);
+CREATE TABLE
+create or replace function master_upd_fn ()
+    returns trigger
+as $$
+begin
+    if new.unit_detail != old.unit_detail then
+        insert into master_hist (unit_id , unit_detail , archive_date)
+        values (old.unit_id , old.unit_detail , current_timestamp);
+    end if;
+    return new;
+end;
+$$
+language plpgsql;
+CREATE FUNCTION
+create trigger master_upd_trg before
+update
+    on master for each row execute procedure master_upd_fn ();
+CREATE TRIGGER
+insert into master (unit_id , unit_detail)
+    values (1 , 'Original udgave') , (2 , 'Original nummer 2');
+INSERT 0 2
+update
+    master
+set
+    unit_detail = 'Nyt indhold'
+    , change_date = current_timestamp
+where
+    unit_id = 1;
+UPDATE 1
+update
+    master
+set
+    unit_detail = 'Endnu nyere indhold'
+    , change_date = current_timestamp
+where
+    unit_id = 1;
+UPDATE 1
+select
+    unit_id
+    , unit_detail
+    , change_date
+from
+    master;
+ unit_id |     unit_detail     |        change_date         
+---------+---------------------+----------------------------
+       2 | Original nummer 2   | 2018-12-16 16:35:26.818797
+       1 | Endnu nyere indhold | 2018-12-16 16:35:26.822446
+(2 rows)
+select
+    unit_id
+    , unit_detail
+    , archive_date
+from
+    master_hist;
+ unit_id |   unit_detail   |        archive_date        
+---------+-----------------+----------------------------
+       1 | Original udgave | 2018-12-16 16:35:26.820521
+       1 | Nyt indhold     | 2018-12-16 16:35:26.822446
+(2 rows)
+psql end.
+
