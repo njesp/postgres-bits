@@ -1,8 +1,12 @@
+=== Frisk install ====
+
+sudo -u postgres psql postgres
+
 === AD Auth ===
 
 https://www.postgresql.org/docs/11/gssapi-auth.html
 
-=== Standard brugeropsætning ===
+=== Standard brugeropsï¿½tning ===
 
 CREATE DATABASE testdb2 WITH OWNER = postgres ENCODING = 'UTF8' LC_COLLATE = 'Danish_Denmark.1252' LC_CTYPE = 'Danish_Denmark.1252' TABLESPACE = pg_default CONNECTION LIMIT = -1;
 
@@ -27,17 +31,17 @@ GRANT P123456_R to user_r;
 
 --ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO P123456_R;
 -- Does not work. 
--- Mon ikke dette virker. Skulle så scriptes periodisk.
+-- Mon ikke dette virker. Skulle sï¿½ scriptes periodisk.
 --ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO niels_R;
 
 
--- Dette kan nok gå, mere traditionelt. 
+-- Dette kan nok gï¿½, mere traditionelt. 
 
 REVOKE CREATE ON SCHEMA public FROM public;
 create role niels login password 'niels' inherit;
 CREATE ROLE P123456 login noinherit password 'niels';
 CREATE SCHEMA P123456 AUTHORIZATION P123456;
--- Log på som p123456 og opret objekter og giv rettigheder til roller 
+-- Log pï¿½ som p123456 og opret objekter og giv rettigheder til roller 
 
 
 

@@ -9,7 +9,7 @@ psql -h localhost -U postgres -d postgres
 
 
 docker pull dpage/pgadmin4
-docker run -p 80:80 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=niels@jespersen.info" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
+docker run -p 80:81 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=niels@jespersen.info" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
 
 
 Lidt mærkeligt, så skal pgadmin4 nås på den fysiske hosts ip, fx http://192.168.0.11
