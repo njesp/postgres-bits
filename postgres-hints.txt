@@ -33,7 +33,10 @@ GRANT USAGE ON SCHEMA P123456 TO P123456_R;
 GRANT P123456_C to user_c;
 GRANT P123456_R to user_r;
 
---ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO P123456_R;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE joe       IN SCHEMA public GRANT ALL ON TABLES TO paul;  
+-- for role betyder at det kun gælder objekter created af rollen. Hvis ikke angives, så er det: If FOR ROLE is omitted, the current role is assumed.
+--ALTER DEFAULT PRIVILEGES   IN SCHEMA P123456 GRANT SELECT ON TABLES TO P123456_R;
 -- Does not work. 
 -- Mon ikke dette virker. Skulle s� scriptes periodisk.
 --ALTER DEFAULT PRIVILEGES IN SCHEMA P123456 GRANT SELECT ON TABLES TO niels_R;
