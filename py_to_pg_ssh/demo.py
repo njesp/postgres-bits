@@ -14,6 +14,7 @@ with SSHTunnelForwarder(ssh_address_or_host=('secretubox.westeurope.cloudapp.azu
     cur.execute(r"create table if not exists t2 (a timestamp default now(), b integer)")
     cur.execute(r"truncate table t2")
     cur.execute(r"insert into t2 (b) values(1)")
+    cur.callproc('insert_data', 2, 2)
     cur.close()
     con.commit()
     con.close()

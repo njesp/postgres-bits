@@ -11,8 +11,12 @@ https://www.postgresql.org/docs/11/gssapi-auth.html
 CREATE DATABASE testdb2 WITH OWNER = postgres ENCODING = 'UTF8' LC_COLLATE = 'Danish_Denmark.1252' LC_CTYPE = 'Danish_Denmark.1252' TABLESPACE = pg_default CONNECTION LIMIT = -1;
 
 -- Postgres 11 
--- Revoke create on the public schema
+-- Revoke excessive privs 
+REVOKE ALL ON DATABASE postgres FROM public; 
 REVOKE CREATE ON SCHEMA public FROM public;
+
+grant 
+
 
 -- Create two users, a creater user and a reader user
 
