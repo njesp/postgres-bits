@@ -11,4 +11,3 @@ begin
     --commit; Virker ikke når der kaldes fra Python
 end;
 $BODY$;
-

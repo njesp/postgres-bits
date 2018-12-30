@@ -1,18 +1,12 @@
 -- Table: public.aisdata
+drop table public.aisdata;
 
- DROP TABLE public.aisdata;
+create table public.aisdata (
+    tid timestamp(3) without time zone not null default now()
+    , sys_id bigserial not null
+    , txt text collate pg_catalog. "default" not null
+    , constraint aisdata_pk primary key (sys_id))
+with (oids = false) tablespace pg_default;
 
-CREATE TABLE public.aisdata
-(
-    tid timestamp(3) without time zone NOT NULL default now(),
-    sys_id bigserial NOT NULL,
-    txt text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT aisdata_pk PRIMARY KEY (sys_id)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
+alter table public.aisdata owner to niels;
 
-ALTER TABLE public.aisdata
-    OWNER to niels;
