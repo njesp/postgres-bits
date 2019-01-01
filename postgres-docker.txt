@@ -14,3 +14,5 @@ docker run -p 80:81 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=niels@jespersen.in
 
 Lidt mærkeligt, så skal pgadmin4 nås på den fysiske hosts ip, fx http://192.168.0.11
 Det samme skal servere fra pgAdmin grænsefladen. 
+
+PgAdmin virker bedre installeret lokalt og rigtig (via apt-get install)

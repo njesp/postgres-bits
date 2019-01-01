@@ -8,6 +8,7 @@ begin
         insert into t2 (b)
         values (j);
     end loop;
-    --commit; Virker ikke når der kaldes fra Python
+    --commit; Virker ikke når der kaldes fra Python, commits skal ske fra klienten. 
 end;
 $BODY$;
+
