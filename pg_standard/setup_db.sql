@@ -1,3 +1,5 @@
+-- Køres fra postgres databasen
+-- psql -U postgres -d postgres -h localhost
 drop database if exists testdb;
 
 drop role if exists njn;
