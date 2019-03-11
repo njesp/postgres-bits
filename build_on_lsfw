@@ -1,0 +1,7 @@
+PostgreSQL builds nicely on Linux Subsystem for Windows. 
+
+These packages need to be installed: 
+
+libreadline-dev
+build-essential
+zlib1g-dev
