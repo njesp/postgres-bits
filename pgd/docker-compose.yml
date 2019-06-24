@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment: 
+    - POSTGRES_PASSWORD=postgres
+    volumes:
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  pgadmin:
+    image:  dpage/pgadmin4:latest
+    restart: always
+    environment:
+    - PGADMIN_DEFAULT_EMAIL=postgres@dst.dk
+    - PGADMIN_DEFAULT_PASSWORD=postgres
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
